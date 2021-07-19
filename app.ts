@@ -1,8 +1,8 @@
-import express from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 
-import { apiRoutes } from './routes/api.js'
+import { apiRoutes } from './routes/api'
 
 const app = express()
 
@@ -15,18 +15,17 @@ app.use((req, res, next) => {
   next()
 })
 
-
 app.use('/api', apiRoutes)
 
-app.use((error, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
   const status = error.statusCode
   const message = error.message
   const data = error.data
-  res.status(status).json({ 
-    message, 
-    data, 
+  res.status(status).json({
+    message,
+    data,
   })
-})
+}
 
 mongoose.connect(
   process.env.MONGO_URL,

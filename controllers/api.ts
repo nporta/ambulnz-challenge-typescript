@@ -1,13 +1,21 @@
-import Pizza from '../models/pizza.js'
-import Order from '../models/order.js'
-import OrderItem from '../models/order-item.js';
+import express, { NextFunction, Request } from 'express'
 
-export const createOrder = async (req, res, next) => {
+import Pizza from '../models/pizza'
+import Order from '../models/order'
+import OrderItem from '../models/order-item'
+
+export interface PizzaData {
+  pizzaId: string
+  quantity: number
+}
+
+export const createOrder = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { pizzaId, quantity } = req.body
   try {
     const pizza = await Pizza.findById(pizzaId)
     if (!pizza) {
       const error = new Error('Pizza not found')
+      // @ts-ignore
       error.statusCode = 404
       throw error
     }
@@ -20,6 +28,7 @@ export const createOrder = async (req, res, next) => {
       orderItems: [orderItem]
     })
     await order.save()
+    // @ts-ignore
     res.status(201).json({
       message: 'Order created successfully!',
       order,
@@ -32,14 +41,15 @@ export const createOrder = async (req, res, next) => {
   }
 };
 
-export const getOrders = async (req, res, next) => {
+export const getOrders = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
-    const orders = await Order.find().populate({ 
+    const orders = await Order.find().populate({
       path: 'orderItems',
       populate: {
         path: 'pizza',
-      } 
+      }
     })
+    // @ts-ignore
     res.status(200).json({
       message: 'Fetched orders successfully.',
       orders,
@@ -50,22 +60,24 @@ export const getOrders = async (req, res, next) => {
     }
     next(err)
   }
-} 
+}
 
-export const getOrder = async (req, res, next) => {
+export const getOrder = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { id } = req.params
   try {
-    const order = await Order.findById(id).populate({ 
+    const order = await Order.findById(id).populate({
       path: 'orderItems',
       populate: {
         path: 'pizza',
-      } 
+      }
     })
     if (!order) {
       const error = new Error('Order not found')
+      // @ts-ignore
       error.statusCode = 404
       throw error
     }
+    // @ts-ignore
     res.status(200).json({
       message: 'Fetched order successfully.',
       order,
@@ -78,7 +90,7 @@ export const getOrder = async (req, res, next) => {
   }
 }
 
-export const createPizza = async (req, res, next) => {
+export const createPizza = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { name, price } = req.body
   const pizza = new Pizza({
     name,
@@ -86,6 +98,7 @@ export const createPizza = async (req, res, next) => {
   })
   try {
     await pizza.save()
+    // @ts-ignore
     res.status(201).json({
       message: 'Pizza created successfully!',
       pizza,
@@ -98,9 +111,10 @@ export const createPizza = async (req, res, next) => {
   }
 }
 
-export const getPizzas = async (req, res, next) => {
+export const getPizzas = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     const pizzas = await Pizza.find()
+    // @ts-ignore
     res.status(200).json({
       message: 'Fetched pizzas successfully.',
       pizzas,
@@ -111,5 +125,5 @@ export const getPizzas = async (req, res, next) => {
     }
     next(err)
   }
-} 
+}
 

@@ -2,8 +2,12 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
-const pizzaSchema = new Schema({
-  id: Schema.ObjectId,
+export interface Pizza {
+  name: string
+  price: number
+}
+
+const pizzaSchema = new Schema<Pizza>({
   name: {
     type: String,
     required: true
@@ -14,4 +18,4 @@ const pizzaSchema = new Schema({
   },
 })
 
-export default mongoose.model('Pizza', pizzaSchema)
+export default mongoose.model<Pizza>('Pizza', pizzaSchema)

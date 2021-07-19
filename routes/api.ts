@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { createPizza, getOrder, getOrders, getPizzas, createOrder } from '../controllers/api.js'
+import { createPizza, getOrder, getOrders, getPizzas, createOrder } from '../controllers/api'
 
 const router = express.Router()
 
@@ -10,7 +10,7 @@ router.get('/order', getOrders)
 
 router.get('/order/:id', getOrder)
 
-//router.put('/order/:id', ...)
+// router.put('/order/:id', ...)
 
 router.post('/pizza', createPizza)
 
