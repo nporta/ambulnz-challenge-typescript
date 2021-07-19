@@ -1,17 +1,19 @@
 # Ambulnz Backend Challenge
 
-This is a solution to the [Ambulnz Backend Challenge](https://github.com/AmbulnzLLC/fullstack-challenge/tree/master/backend).
+This is a solution to the [Ambulnz Backend Challenge](https://github.com/AmbulnzLLC/fullstack-challenge/tree/master/backend) using Typescript.
+If you want to see the solution without Typescript please check [here](https://github.com/nporta/ambulnz-backend-challenge).
 
 How to run
 -------------
 * `npm install`
 * Create a `nodemon.json` file and add `MONGO_URL` variable
-* `npm start`
+* `npm run dev`
 
 Stack
 -------------
 * Node.js / Express
 * MongoDB / Mongoose
+* Typescript
 
 Project Description
 -------------
